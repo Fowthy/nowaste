@@ -25,7 +25,7 @@ export default function FoodList({ route }) {
   return (
     <>
       {foodItems.map(foodItem => (
-        <View key={foodItem.id}>
+        <View key={foodItem.id} style={{ width: '100%' }}>
           <Image source={{ uri: foodItem.imageUrl }} style={{ width: 200, height: 200 }} />
           <Text>{foodItem.foodItem}</Text>
           <Button title="Delete" onPress={() => handleDelete(foodItem.id)} />

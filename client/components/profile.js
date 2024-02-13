@@ -5,6 +5,8 @@ import { Button, Text, Icon, View } from 'react-native';
 export default function Profile() {
 
     return (
-        <p>Testovic</p>
+        <View style={{ width: '100%' }}>
+            <p>Testovic</p>
+        </View>
     )
 }

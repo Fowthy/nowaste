@@ -62,7 +62,7 @@ export default function FoodForm({ route }) {
     <>
       <Button title="Add Food Item" onPress={() => setShowForm(true)} />
       {showForm && (
-        <View>
+        <View style={{ width: '100%' }}>
           <TextInput
             placeholder='What food item do you want to add?'
             value={foodItem}
