@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Button, Text, View, Image } from 'react-native';
 import { collection, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
-export default function FoodList({ db }) {
+export default function FoodList({ route }) {
+  const { db } = route.params;
+
   const [foodItems, setFoodItems] = useState([]);
 
   useEffect(() => {

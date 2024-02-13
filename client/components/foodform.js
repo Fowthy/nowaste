@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Button, TextInput, Image } from 'react-native';
+import { Button, TextInput, Image, View } from 'react-native';
 import { collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-export default function FoodForm({ db }) {
+export default function FoodForm({ route }) {
+  const { db } = route.params;
   const [foodItem, setFoodItem] = useState("");
   const [image, setImage] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   const pickImage = () => {
     launchImageLibrary({mediaType: 'photo'}, (response) => {
@@ -15,7 +17,7 @@ export default function FoodForm({ db }) {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        setImage(response.uri);
+        setImage(response.assets[0].uri);
       }
     });
   };
@@ -39,8 +41,6 @@ export default function FoodForm({ db }) {
     const storageRef = ref(storage, 'images/' + Date.now());
     await uploadBytes(storageRef, blob);
 
-    blob.close();
-
     return await getDownloadURL(storageRef);
   };
 
@@ -54,19 +54,25 @@ export default function FoodForm({ db }) {
       });
       setFoodItem("");
       setImage(null);
+      setShowForm(false);
     }
   }
 
   return (
     <>
-      <TextInput
-        placeholder='What food item do you want to add?'
-        value={foodItem}
-        onChangeText={setFoodItem}
-      />
-      <Button title="Pick Image" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      <Button title="Add Food Item" onPress={handleSubmit} />
+      <Button title="Add Food Item" onPress={() => setShowForm(true)} />
+      {showForm && (
+        <View>
+          <TextInput
+            placeholder='What food item do you want to add?'
+            value={foodItem}
+            onChangeText={setFoodItem}
+          />
+          <Button title="Pick Image" onPress={pickImage} />
+          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+          <Button title="Submit" onPress={handleSubmit} />
+        </View>
+      )}
     </>
   );
 }

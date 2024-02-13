@@ -6,6 +6,7 @@ import { getFirestore } from "firebase/firestore";
 
 import FoodForm from './components/foodform';
 import FoodList from './components/foodlist';
+import Navbar from './components/navbar';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBsK5SWlZVzsS3jlR9-nGjRhTznCoV-IHE",
@@ -25,8 +26,9 @@ const db = getFirestore(app); // Get Firestore instance
 export default function App() {
   return (
     <View style={styles.container}>
-      <FoodForm db={db} />
-      <FoodList db={db} />
+      <Navbar db={db} />
+      {/* <FoodForm db={db} /> */}
+      {/* <FoodList db={db} /> */}
     </View>
   );
 }
