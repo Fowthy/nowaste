@@ -4,9 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
-import FoodForm from './components/foodform';
-import FoodList from './components/foodlist';
-import Navbar from './components/navbar';
+import Routes from './components/routes'; // Import your Routes component
 
 const firebaseConfig = {
   apiKey: "AIzaSyBsK5SWlZVzsS3jlR9-nGjRhTznCoV-IHE",
@@ -19,6 +17,7 @@ const firebaseConfig = {
   measurementId: "G-RL89ZZE9M9"
 };
 
+
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app); // Get Firestore instance
@@ -26,9 +25,7 @@ const db = getFirestore(app); // Get Firestore instance
 export default function App() {
   return (
     <View style={styles.container}>
-      <Navbar db={db} />
-      {/* <FoodForm db={db} /> */}
-      {/* <FoodList db={db} /> */}
+      <Routes db={db} />
     </View>
   );
 }

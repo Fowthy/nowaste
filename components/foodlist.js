@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Text, View, Image } from 'react-native';
+import { Button, Text, View, Image, StyleSheet } from 'react-native';
+import { Card } from 'react-native-paper';
 import { collection, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 export default function FoodList({ route }) {
@@ -23,15 +24,43 @@ export default function FoodList({ route }) {
   }
 
   return (
-    <>
+    <View style={styles.container}>
       {foodItems.map(foodItem => (
-        <View key={foodItem.id} style={{ width: '100%' }}>
-          <Image source={{ uri: foodItem.imageUrl }} style={{ width: 200, height: 200 }} />
-          <Text>{foodItem.foodItem}</Text>
-          <Button title="Delete" onPress={() => handleDelete(foodItem.id)} />
-          <Button title="Edit" onPress={() => handleEdit(foodItem.id, 'New Food Item')} />
-        </View>
+        <Card key={foodItem.id} style={styles.card}>
+          <Card.Cover source={{ uri: foodItem.imageUrl }} style={styles.image} />
+          <Card.Content>
+            <Text>{foodItem.foodItem}</Text>
+          </Card.Content>
+          {/* <Button title="Delete" onPress={() => handleDelete(foodItem.id)} />
+          <Button title="Edit" onPress={() => handleEdit(foodItem.id, 'New Food Item')} /> */}
+        </Card>
       ))}
-    </>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'start',
+    // marginTop: 800,
+    overflow: 'scroll',
+  },
+  card: {
+    width: '90%',
+    marginTop:12,
+    marginBottom: 12,
+    borderRadius: 10,
+    elevation: 3,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: '#333',
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+  },
+  image: {
+    width: '100%',
+    height: 300,
+    minHeight: 300,
+  },
+});
