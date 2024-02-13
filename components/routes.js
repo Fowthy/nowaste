@@ -5,12 +5,15 @@ import { View } from 'react-native';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+
 
 import Profile from './profile';
 import FoodForm from './foodform';
 import FoodList from './foodlist';
 import Login from './login';
 import AdminPanel from './adminpanel';
+import FoodItem from './fooditem';
 
 const Tab = createBottomTabNavigator();
 
@@ -68,12 +71,14 @@ const Routes = ({ db }) => {
             <>
               {role === 'restaurant' && <Tab.Screen name="Add hrana" component={FoodForm} initialParams={{ db }} />}
               <Tab.Screen name="Vij hrana" component={FoodList} initialParams={{ db }} />
+              <Tab.Screen name="FoodItem" component={FoodItem} />
               <Tab.Screen name="Profile" component={Profile} />
               {role === 'admin' && <Tab.Screen name="Admin Panel" component={AdminPanel} />}
             </>
           ) : (
             <>
               <Tab.Screen name="Vij hrana" component={FoodList} initialParams={{ db }} />
+              <Tab.Screen name="FoodItem" component={FoodItem} />
               <Tab.Screen name="Login" component={Login} />
             </>
           )}

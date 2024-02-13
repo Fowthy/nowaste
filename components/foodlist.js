@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Text, View, Image, StyleSheet } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Button, Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
 import { collection, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
-export default function FoodList({ route }) {
+
+export default function FoodList({ route, navigation }) {
   const { db } = route.params;
+
 
   const [foodItems, setFoodItems] = useState([]);
 
@@ -26,14 +28,16 @@ export default function FoodList({ route }) {
   return (
     <View style={styles.container}>
       {foodItems.map(foodItem => (
-        <Card key={foodItem.id} style={styles.card}>
-          <Card.Cover source={{ uri: foodItem.imageUrl }} style={styles.image} />
-          <Card.Content>
-            <Text>{foodItem.foodItem}</Text>
-          </Card.Content>
-          {/* <Button title="Delete" onPress={() => handleDelete(foodItem.id)} />
-          <Button title="Edit" onPress={() => handleEdit(foodItem.id, 'New Food Item')} /> */}
-        </Card>
+        <TouchableOpacity key={foodItem.id} onPress={() => navigation.navigate('FoodItem', { foodItem })} style={styles.card}>
+          <Card>
+            <Card.Cover source={{ uri: foodItem.imageUrl }} style={styles.image} />
+            <Card.Content>
+              <Text>{foodItem.foodItem}</Text>
+            </Card.Content>
+            {/* <Button title="Delete" onPress={() => handleDelete(foodItem.id)} />
+            <Button title="Edit" onPress={() => handleEdit(foodItem.id, 'New Food Item')} /> */}
+          </Card>
+        </TouchableOpacity>
       ))}
     </View>
   );
